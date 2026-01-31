@@ -1,0 +1,32 @@
+# Gold & Silver Monte Carlo Simulation - Dependencies
+
+# Core Scientific Computing
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Data Visualization
+matplotlib>=3.7.0
+plotly>=5.14.0
+
+# Financial Data
+yfinance>=0.2.0
+
+# Statistical Analysis
+scipy>=1.10.0
+
+# Web GUI (Streamlit)
+streamlit>=1.20.0
+
+# Configuration (Optional)
+pyyaml>=6.0
+
+# Installation Instructions:
+# 
+# Install all dependencies:
+#   pip install -r requirements.txt
+#
+# Minimal installation (CLI only, no interactive plots):
+#   pip install numpy pandas matplotlib yfinance
+#
+# Full installation (CLI + GUI with all features):
+#   pip install -r requirements.txt
