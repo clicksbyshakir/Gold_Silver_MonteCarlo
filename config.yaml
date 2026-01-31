@@ -1,0 +1,97 @@
+# Configuration for Gold & Silver Monte Carlo Simulation
+
+# Asset Configuration
+tickers:
+  - "GC=F"  # Gold futures
+  - "SI=F"  # Silver futures
+
+labels:
+  - "Gold (GC=F)"
+  - "Silver (SI=F)"
+
+# Historical Data
+years_history: 3  # Years of historical data to download
+
+# Simulation Parameters
+n_simulations: 20000  # Number of Monte Carlo paths
+trading_days_per_month: 21  # Average trading days per month
+random_seed: 42  # For reproducibility
+
+# Forecast Horizons (in months)
+horizons_months:
+  - 8
+  - 12
+  - 16
+
+# Model Selection
+model: "gbm"  # Options: "gbm" (Geometric Brownian Motion) or "jump" (Jump Diffusion)
+
+# Advanced Features
+features:
+  interactive_plots: true  # Use Plotly for interactive charts (requires plotly package)
+  scenario_analysis: true  # Run bull/base/bear scenarios
+  statistical_tests: true  # Perform normality and diagnostic tests
+  
+# Output Configuration
+output:
+  save_results: true  # Save results to files
+  output_directory: "./results"  # Directory for saving outputs
+  save_plots: true  # Save interactive HTML plots
+
+# Risk Metrics Configuration
+risk_metrics:
+  var_levels:  # Value at Risk confidence levels
+    - 0.95
+    - 0.99
+  cvar_levels:  # Conditional VaR confidence levels
+    - 0.95
+    - 0.99
+  trading_days_per_year: 252  # For annualization
+
+# Visualization Configuration
+visualization:
+  quantiles:  # Quantiles to display in fan charts
+    - 0.05
+    - 0.25
+    - 0.50
+    - 0.75
+    - 0.95
+  
+  terminal_distribution:
+    bins: 50  # Number of bins for histogram
+    
+  matplotlib:
+    figure_width: 10
+    figure_height: 6
+    dpi: 100
+
+# Scenario Analysis Configuration
+scenarios:
+  bear:
+    drift_adjustment: -0.5  # Multiply sigma and subtract from mu
+    volatility_multiplier: 1.3
+  
+  base:
+    drift_adjustment: 0.0
+    volatility_multiplier: 1.0
+  
+  bull:
+    drift_adjustment: 0.5  # Multiply sigma and add to mu
+    volatility_multiplier: 0.8
+
+# Jump Diffusion Parameters (used when model = "jump")
+# These are auto-estimated from data, but can be manually overridden
+jump_diffusion:
+  auto_estimate: true  # Automatically estimate from historical data
+  jump_threshold_sigma: 3  # Returns beyond this many std devs are considered jumps
+  
+  # Manual parameters (used if auto_estimate = false)
+  manual_params:
+    "GC=F":
+      lambda: 0.01  # Jump intensity (daily probability)
+      mu_j: 0.0  # Mean jump size (log return)
+      sigma_j: 0.02  # Jump size volatility
+    "SI=F":
+      lambda: 0.015
+      mu_j: 0.0
+      sigma_j: 0.025
